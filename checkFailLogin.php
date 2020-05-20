@@ -1,0 +1,35 @@
+<?php
+    $maxFailNum=10;
+    $logfile="./lastb.txt";
+    $descfile="./desc.txt";
+    $enablefile="./enableip.txt"; 
+    $ipreg="/((25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)/";
+    //读取白名单中的ip
+    $enableIp=file_get_contents($enablefile);
+    preg_match_all($ipreg,$enableIp,$enableIp);
+    if(count($enableIp)>0){
+        $enableIp=$enableIp[0];
+    }else{
+        $enableIp=[];
+    }
+    //读取lastb日志
+    $log=file_get_contents($logfile);
+    preg_match_all($ipreg,$log,$ip);
+    $ip=$ip[0];
+    $jb=fopen($descfile,'w');
+    if(count($ip)>0){
+        $str="";
+        $ipCount=array_count_values($ip);
+        foreach ($ipCount as $k => $v) {
+            if($v>$maxFailNum){
+                //检查ip是否在白名单内
+                if(!in_array($k,$enableIp)){
+                    $str.=$k."\n";
+                }
+            }
+        }
+        if(strlen($str)>0){
+            fwrite($jb,$str);
+        }
+    }
+    fclose($jb);
