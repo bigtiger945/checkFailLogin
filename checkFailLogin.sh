@@ -1,5 +1,5 @@
 #!/bin/bash
-lastb >/home/wwwroot/rss/checkFailLogin/lastb.txt
-php /home/wwwroot/rss/checkFailLogin/checkFailLogin.php
-cat /home/wwwroot/rss/checkFailLogin/desc.txt /etc/hosts.deny
+lastb >/home/checkFailLogin/lastb.txt
+php /home/checkFailLogin/checkFailLogin.php
+cat /home/checkFailLogin/desc.txt /etc/hosts.deny
 
