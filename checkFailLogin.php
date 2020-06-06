@@ -1,9 +1,9 @@
 <?php
 $maxFailNum = 10;
-$lastbfile = "./lastb.txt";
-$descfile = "./desc.txt";
-$enablefile = "./enableip.txt";
-$denyfile = "./deny.txt";
+$lastbfile = "/dev/shm/lastb.txt";
+$descfile = "/dev/shm/desc.txt";
+$enablefile = "/dev/shm/enableip.txt";
+$denyfile = "/dev/shm/deny.txt";
 $ipreg = "/((25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)/";
 //读取白名单中的ip
 $enableIp = [];
@@ -35,7 +35,7 @@ if (file_exists($lastbfile)) {
             if ($v > $maxFailNum) {
                 if (!in_array($k, $enableIp)) {    //如果ip不在白名单内
                     if (!in_array($k, $denyIp)) {  //ip还没有被记录过
-                        $str .= 'sshd:'.$k .':deny'. "\n";          //将ip记录下来，准备写入文件
+                        $str .= 'ALL:'.$k .':deny'. "\n";          //将ip记录下来，准备写入文件
                     }
                 }
             }
