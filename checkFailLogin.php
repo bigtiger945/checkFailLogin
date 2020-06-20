@@ -50,7 +50,7 @@ if (file_exists($lastbfile)) {
             $jb2 = fopen($denyfile, 'a');
             fwrite($jb2, $str);
 	    fclose($jb2);
-	    sendmailto('iamhwj@qq.com','PI有新的攻击信息，请迅速查看',$str);
+	    sendmailto('xxxx@qq.com','PI有新的攻击信息，请迅速查看',$str);
         }
     }
 }
