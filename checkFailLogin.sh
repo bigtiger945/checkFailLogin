@@ -1,7 +1,7 @@
 #!/bin/bash
 lastb >/dev/shm/lastb.txt
+rm /dev/shm/desc.txt
 /usr/bin/php /home/3w/sites/checkFailLogin/checkFailLogin.php
-
-if [ -f deny.txt ]; then 
-	cat /dev/shm/deny.txt >> /etc/hosts.deny;
+if [ -f /dev/shm/desc.txt ]; then 
+	cat /dev/shm/desc.txt >> /etc/hosts.deny
 fi

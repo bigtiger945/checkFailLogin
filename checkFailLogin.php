@@ -1,9 +1,13 @@
 <?php
+include "./smtp.class.php";
 $maxFailNum = 10;
-$lastbfile = "/dev/shm/lastb.txt";
-$descfile = "/dev/shm/desc.txt";
-$enablefile = "/dev/shm/enableip.txt";
-$denyfile = "/dev/shm/deny.txt";
+//$dir="./";
+dir="/dev/shm/";
+$lastbfile = "{$dir}lastb.txt";
+$descfile = "{$dir}desc.txt";
+$enablefile = "{$dir}enableip.txt";
+$denyfile = "{$dir}deny.txt";
+
 $ipreg = "/((25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)/";
 //读取白名单中的ip
 $enableIp = [];
@@ -23,7 +27,6 @@ if (file_exists($denyfile)) {
 }
 //读取lastb日志
 $lastbip = [];
-$jb = fopen($descfile, 'w');   //把文件清空
 if (file_exists($lastbfile)) {
     preg_match_all($ipreg, file_get_contents($lastbfile), $lastbip);
     if (count($lastbip) > 0) {
@@ -41,11 +44,13 @@ if (file_exists($lastbfile)) {
             }
         }
         if (strlen($str) > 0) {
+            $jb = fopen($descfile, 'w');   //把文件清空
             fwrite($jb, $str);
+            fclose($jb);
             $jb2 = fopen($denyfile, 'a');
             fwrite($jb2, $str);
-            fclose($jb2);
+	    fclose($jb2);
+	    sendmailto('iamhwj@qq.com','PI有新的攻击信息，请迅速查看',$str);
         }
     }
 }
-fclose($jb);
