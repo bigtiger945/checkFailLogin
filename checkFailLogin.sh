@@ -1,4 +1,5 @@
 #!/bin/bash
+currentDir = $(cd $(dirname $0)
 lastb >/dev/shm/lastb.txt
 rm /dev/shm/desc.txt
 /usr/bin/php /home/3w/sites/checkFailLogin/checkFailLogin.php

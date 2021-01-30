@@ -2,11 +2,12 @@
 include "./smtp.class.php";
 $maxFailNum = 10;
 //$dir="./";
-dir="/dev/shm/";
+$dir="/dev/shm/";
+$currentDir=dirname(__FILE__)."/";
 $lastbfile = "{$dir}lastb.txt";
 $descfile = "{$dir}desc.txt";
 $enablefile = "{$dir}enableip.txt";
-$denyfile = "{$dir}deny.txt";
+$denyfile = "{$currentDir}deny.txt";
 
 $ipreg = "/((25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)/";
 //读取白名单中的ip
