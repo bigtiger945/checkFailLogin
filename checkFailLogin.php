@@ -1,12 +1,12 @@
 <?php
 include "./smtp.class.php";
-$maxFailNum = 10;
+$maxFailNum = 8;
 //$dir="./";
 $dir="/dev/shm/";
 $currentDir=dirname(__FILE__)."/";
 $lastbfile = "{$dir}lastb.txt";
 $descfile = "{$dir}desc.txt";
-$enablefile = "{$dir}enableip.txt";
+$enablefile = "{$currentDir}enableip.txt";
 $denyfile = "{$currentDir}deny.txt";
 
 $ipreg = "/((25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)/";
@@ -36,7 +36,7 @@ if (file_exists($lastbfile)) {
         $str = "";
         $ipCount = array_count_values($lastbip);
         foreach ($ipCount as $k => $v) {
-            if ($v > $maxFailNum) {
+            if ($v >= $maxFailNum) {
                 if (!in_array($k, $enableIp)) {    //如果ip不在白名单内
                     if (!in_array($k, $denyIp)) {  //ip还没有被记录过
                         $str .= 'ALL:'.$k .':deny'. "\n";          //将ip记录下来，准备写入文件
